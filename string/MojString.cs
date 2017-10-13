@@ -14,6 +14,15 @@ namespace mojtipstring {
 				str = newStr;
 			}
 		}
+		private MojString[] AddStringToArray(MojString[] baseS, MojString s) {
+			MojString[] newBaseS = new MojString[baseS.Length + 1];
+			for (int i = 0; i < baseS.Length; i++) {
+				newBaseS[i] = baseS[i].Copy();
+			}
+			newBaseS[newBaseS.Length - 1] = s.Copy();
+
+			return newBaseS;
+		}
 
 		public MojString(char[] niz)
 		{
@@ -51,6 +60,10 @@ namespace mojtipstring {
 				}
 			}
 			return -1;
+		}
+		public MojString Copy() {
+			MojString s = new MojString(str);
+			return s;
 		}
 		public void Append(MojString s) {
 			char[] newStr = new char[GetLength() + s.GetLength()];
@@ -90,12 +103,19 @@ namespace mojtipstring {
 			str = newStr;
 		}
 		public MojString[] Split(char c) {
-			/*
-			 * TODO
-			 * Implementacija splita.
-			 * Podeliti string na vise stringova a da se ne koriste liste.
-			 */
-			return new MojString[0];
+			MojString[] s = new MojString[0];
+
+			int begin = 0;
+			for (int i = 0; i < GetLength(); i++) {
+				if (GetCharAt(i) == c) {
+					s = AddStringToArray(s, Substring(begin, i - 1));
+					begin = i + 1;
+				} else if (i == GetLength() - 1) {
+					s = AddStringToArray(s, Substring(begin, i));
+				}
+			}
+
+			return s;
 		}
 		public MojString Substring(int i, int n) {
 			if (str != null) {

@@ -6,15 +6,13 @@ namespace mojtipstring
     {
         static void Main(string[] args)
         {
-            char[] string1 = {'H', 'e', 'r', 'l', 'd'};
-            char[] string2 = {'l', 'l', 'o', ' ', 'w', 'o'};
-            MojString s1 = new MojString(string1);
-            MojString s2 = new MojString(string2);
+            char[] string1 = {'H', 'e', 'l', 'l', 'o', ' ', 'w', 'o', 'r', 'l', 'd'};
+            MojString s = new MojString(string1);
             
-            s1.Insert(2, s2);
-            s1.Print(true);
-            MojString s3 = s1.Substring(2, 3);
-            s3.Print(true);
+            MojString[] s1 = s.Split('o');
+            for (int i = 0; i < s1.Length; i++) {
+                s1[i].Print(true);
+            }
         }
     }
 }
