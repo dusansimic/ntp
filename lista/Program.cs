@@ -6,13 +6,18 @@ namespace lista
     {
         static void Main(string[] args)
         {
-            IntList lista = new IntList();
+            IntList lista1 = new IntList();
+            IntList lista2 = new IntList();
 
-            lista.AddLast(1);
-            lista.AddLast(2);
-            lista.AddLast(3);
-
-            System.Console.WriteLine(lista);
+            lista1.AddLast(1);
+            lista1.AddLast(2);
+            lista1.AddLast(3);
+            
+            lista2.AddLast(1);
+            lista2.AddLast(2);
+            lista2.AddLast(2);
+            
+            System.Console.WriteLine(lista1.Equals(lista2));
         }
     }
 }
