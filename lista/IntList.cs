@@ -65,6 +65,23 @@ namespace lista {
 			IntNode newElement = new IntNode(data);
 			last.Next = newElement;
 		}
+		public void AddLast(int data, IntNode next) {
+			IntNode last;
+
+			if (head == null) {
+				head = new IntNode(data);
+				return;
+			}
+
+			last = head;
+
+			while (last.Next != null) {
+				last = last.Next;
+			}
+
+			IntNode newElement = new IntNode(data, next);
+			last.Next = newElement;
+		}
 		public void AddFirst(int data) {
 			IntNode newElement;
 
@@ -82,9 +99,9 @@ namespace lista {
 				head = new IntNode(data);
 				return;
 			}
-
 			if (index < 0 || index >= Length()) {
 				System.Console.WriteLine("Index nije unutar niza!");
+				return;
 			}
 
 			IntNode curr = head;
@@ -99,37 +116,83 @@ namespace lista {
 			newElement.Next = next;
 		}
 		public void AddRangeFirst(IntList list) {
-			/*
-			 * Uraditi kopiranje preko for-a!
-			 */
+			IntList newList = new IntList();
 			IntNode curr = list.Head();
 
-			if (curr == null) {
-				return;
-			}
-
 			while (curr.Next != null) {
+				newList.AddLast(curr.Data);
 				curr = curr.Next;
 			}
 
-			curr.Next = head;
+			newList.AddLast(curr.Data, head);
+			head = newList.Head();
 		}
 		public void AddRangeLast(IntList list) {
-			/*
-			 * Uraditi kopiranje preko for-a!
-			 */
-			IntNode curr = head;
+			IntNode curr = list.Head();
 
-			if (curr == null) {
-				head = list.Head();
+			while (curr != null) {
+				AddLast(curr.Data);
+				curr = curr.Next;
+			}
+		}
+		public void AddRange(int index, IntList list) {
+			if (index < 0 || index >= Length()) {
+				System.Console.WriteLine("Index nije unutar niza!");
 				return;
 			}
+				
+			IntNode curr = list.Head();
 
-			while (curr.Next != null) {
+			if (head != null) {
+				int i = index;
+				
+				while (curr != null) {
+					Add(i, curr.Data);
+					i++;
+					curr = curr.Next;
+				}
+			} else {
+				while (curr != null) {
+					AddLast(curr.Data);
+					curr = curr.Next;
+				}
+			}
+		}
+		public int GetDataAt(int index) {
+			if (head == null) {
+				System.Console.WriteLine("Lista je prazna!");
+				return 0;
+			}
+			if (index < 0 || index >= Length()) {
+				System.Console.WriteLine("Index nije unutar niza!");
+				return 0;
+			}
+
+			IntNode curr = head;
+
+			for (int i = 0; i < index; i++) {
 				curr = curr.Next;
 			}
 
-			curr.Next = list.Head();
+			return curr.Data;
+		}
+		public void ChangeDataAt(int index, int data) {
+			if (head == null) {
+				System.Console.WriteLine("Lista je prazna!");
+				return;
+			}
+			if (index < 0 || index >= Length()) {
+				System.Console.WriteLine("Index nije unutar niza!");
+				return;
+			}
+
+			IntNode curr = head;
+
+			for (int i = 0; i < index; i++) {
+				curr = curr.Next;
+			}
+
+			curr.Data = data;
 		}
 		public void Destroy(int index) {
 			if (head == null) {
@@ -174,7 +237,25 @@ namespace lista {
 			curr = null;
 			prev = null;
 		}
+		public void Reverse() {
+			IntList newList = new IntList();
 
+			int k = 1;
+
+			for (int i = 0; i < Length(); i++) {
+				IntNode curr = head;
+
+				for (int j = 0; j < Length() - k; j++) {
+					curr = curr.Next;
+				}
+
+				newList.AddLast(curr.Data);
+
+				k++;
+			}
+
+			head = newList.Head();
+		}
 		public bool Contains(int data) {
 			if (head == null) {
 				return false;
@@ -191,15 +272,38 @@ namespace lista {
 
 			return false;
 		}
+		public int[] ToArray() {
+			int[] niz = new int[Length()];
+
+			IntNode curr = null;
+			int i = 0;
+
+			while (curr != null) {
+				niz[i++] = curr.Data;
+				curr = curr.Next;
+			}
+
+			return niz;
+		}
 
 		public override string ToString() {
 			string str = "";
 
+			if (head == null) {
+				str += "[ ]";
+				return str;
+			}
+
 			IntNode curr = head;
+			str += "[ ";
 			while (curr != null) {
-				str += (curr.Data + " ");
+				str += curr.Data;
+				if (curr.Next != null) {
+					str += ", ";
+				}
 				curr = curr.Next;
 			}
+			str += " ]";
 
 			return str;
 		}

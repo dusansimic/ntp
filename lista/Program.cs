@@ -12,12 +12,12 @@ namespace lista
             lista1.AddLast(1);
             lista1.AddLast(2);
             lista1.AddLast(3);
+
+            System.Console.WriteLine(lista1);
+
+            lista1.Reverse();
             
-            lista2.AddLast(1);
-            lista2.AddLast(2);
-            lista2.AddLast(2);
-            
-            System.Console.WriteLine(lista1.Equals(lista2));
+            System.Console.WriteLine(lista1);
         }
     }
 }
