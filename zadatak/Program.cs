@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace zadatak
@@ -31,8 +31,8 @@ namespace zadatak
             System.Console.WriteLine("Cetvrti test");
             try {
                 p1.Dodaj(new Monom(4, 4));
-            } catch (Exception e) {
-                System.Console.WriteLine("Exception caught: {0}", e);
+            } catch {
+                System.Console.WriteLine("Doslo je do greske, i to ne bilo kakve nego nisu postovana navedena pravila za pravljenje polinoma!");
             }
             System.Console.WriteLine(p1);
             System.Console.WriteLine();
@@ -55,7 +55,7 @@ namespace zadatak
             System.Console.WriteLine();
 
             System.Console.WriteLine("Osmi test");
-            Polinom.Saberi(p1, p2);
+            p1 = Polinom.Saberi(p1, p2);
             System.Console.WriteLine(p1);
             System.Console.WriteLine();
 
@@ -65,8 +65,8 @@ namespace zadatak
             System.Console.WriteLine();
 
             System.Console.WriteLine("Deseti test");
-            Polinom.Saberi(p2, p2);
-            System.Console.WriteLine(p2);
+            Polinom p5 = Polinom.Saberi(p2, p2);
+            System.Console.WriteLine(p5);
             System.Console.WriteLine();
 
             System.Console.WriteLine("Jedanaesti test");

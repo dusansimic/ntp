@@ -118,34 +118,44 @@ namespace zadatak {
 			poly = novi.poly;
 		}
 		/*
-		 * Staticka metoda koja sabira dva polinoma.
-		 * Prvi parametar je polinom koji je rezultat sabiranja.
+		 * Metoda koja sabira dva polinoma.
 		 */
-		public static void Saberi(Polinom p1, Polinom p2) {
-			for (int i = 0; i < p2.poly.Count; i++) {
+		public void Saberi(Polinom p) {
+			for (int i = 0; i < p.poly.Count; i++) {
 				try {
-					p1.Dodaj(p2.poly[i]);
+					Dodaj(p.poly[i]);
 				} catch {
-					for (int j = 0; j < p1.poly.Count; j++) {
-						if (p1.poly[j].Power == p2.poly[i].Power) {
-							p1.poly[j].Coef += p2.poly[i].Coef;
-							if (p1.poly[j].Coef == 0) {
-								p1.poly.RemoveAt(j);
+					for (int j = 0; j < poly.Count; j++) {
+						if (poly[j].Power == p.poly[i].Power) {
+							poly[j].Coef += p.poly[i].Coef;
+							if (poly[j].Coef == 0) {
+								poly.RemoveAt(j);
 							}
 						}
 					}
 				}
 			}
-			if (p1.poly.Count == 0) {
-				p1.isNull = true;
+			if (poly.Count == 0) {
+				isNull = true;
 			}
+		}
+		/*
+		 * Staticka metoda koja sabira dva polinoma.
+		 * Povratna vrednost je polinom koji je rezultat sabiranja.
+		 */
+		public static Polinom Saberi(Polinom p1, Polinom p2) {
+			Polinom novi = new Polinom(p1.poly);
+			novi.Saberi(p2);
+			return novi;
 		}
 		/*
 		 * Staticka metoda koja mnozi dva polinoma.
 		 * Prvi parametar je polinom koji je rezultat mnozenja.
 		 */
-		public static void Pomnozi(Polinom p1, Polinom p2) {
-			p1.Pomnozi(p2);
+		public static Polinom Pomnozi(Polinom p1, Polinom p2) {
+			Polinom novi = new Polinom(p1.poly);
+			novi.Pomnozi(p2);
+			return novi;
 		}
 		/*
 		 * Prepisana sistemska metoda za vracanje stringa.
