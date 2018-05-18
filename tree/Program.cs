@@ -15,8 +15,9 @@ namespace tree
             root.AddChild(child3);
             Node<int> child4 = new Node<int>(5);
             child1.AddChild(child4);
+            Node<int> child5 = new Node<int>(6);
             Tree<int> t = new Tree<int>(root);
-            System.Console.WriteLine(t.FindNode(child1));
+            System.Console.WriteLine(t.FindNode(child5));
         }
     }
 }

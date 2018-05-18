@@ -11,13 +11,14 @@ namespace tree {
 		public Tree(Node<T> root) {
 			this.root = root;
 		}
-		public int FindNode(Node<T> node) {
+		public bool FindNode(Node<T> node) {
 			Stack<Node<T>> stack = new Stack<Node<T>>();
 			stack.Push(root);
-			List<Node<T>> visited = new List<Node<T>>();
+			// List<Node<T>> visited = new List<Node<T>>();
+			// visited.Add(root);
+			HashSet<Node<T>> visited = new HashSet<Node<T>>();
 			visited.Add(root);
-			int level = 0;
-			return findNodeTool(node, stack, visited, level);
+			return findNodeToolThird(node, stack, visited);
 		}
 		private int findNodeTool(Node<T> node, Stack<Node<T>> stack, List<Node<T>> visited, int level) {
 			if (stack.Count == 0) {
@@ -39,6 +40,44 @@ namespace tree {
 				return findNodeTool(node, stack, visited, level);
 			}
 			return -1;
+		}
+		private int findNodeToolSecond(Node<T> node, Stack<Node<T>> stack, List<Node<T>> visited, int level) {
+			if (stack.Count == 0) {
+				return -1;
+			} else {
+				foreach (Node<T> elem in stack.Peek().Children) {
+					foreach (Node<T> tempElem in visited) {
+						if (!tempElem.Equals(elem)) {
+							if (elem.Equals(node)) {
+								level++;
+								return level;
+							}
+							stack.Push(elem);
+							visited.Add(elem);
+							level++;
+							return findNodeToolSecond(node, stack, visited, level);
+						}
+					}
+					stack.Pop();
+					level--;
+					return findNodeToolSecond(node, stack, visited, level);
+				}
+			}
+			return -1;
+		}
+		private bool findNodeToolThird(Node<T> node, Stack<Node<T>> stack, HashSet<Node<T>> visited) {
+			while (stack.Count != 0) {
+				foreach (Node<T> sub in stack.Pop().Children) {
+					if (!visited.Contains(sub)) {
+						if (sub.Equals(node)) {
+							return true;
+						}
+						visited.Add(sub);
+						stack.Push(sub);
+					}
+				}
+			}
+			return false;
 		}
 	}
 
